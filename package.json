@@ -20,8 +20,5 @@
         "redux-persist": "^6.0.0",
         "remark": "^13.0.0",
         "remark-html": "^13.0.1"
-    },
-    "devDependencies": {
-        "redux-devtools-extension": "^2.13.8"
     }
 }
