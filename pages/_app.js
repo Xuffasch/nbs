@@ -24,7 +24,10 @@ export default function App({ Component, pageProps }) {
           }
         ); 
       });
-     } 
+     }
+
+    //  let ImageLoader = new Worker("../workers/imageWorker.js");
+    //  ImageLoader.postMessage("Hello World !")
   }, [])
 
   return (
