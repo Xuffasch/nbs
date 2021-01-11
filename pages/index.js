@@ -52,6 +52,10 @@ export default function Home({ allPostsData }) {
         <Link href="/products">
           <a>Catalogue Airtable</a>
         </Link>
+        <br />
+        <Link href="/static-products">
+          <a>Produits Permanents</a>
+        </Link>
       </section>
 
       <section>
