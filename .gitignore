@@ -32,3 +32,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# generated service worker changes after each build because of file changes
+/public/sw.js
+/public/sw.js.map
