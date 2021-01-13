@@ -50,11 +50,23 @@ export default function Home({ allPostsData }) {
       </section>
       <section>
         <Link href="/products">
-          <a>Catalogue Airtable</a>
+          <a>Next Image Products Page</a>
         </Link>
         <br />
         <Link href="/static-products">
-          <a>Produits Permanents</a>
+          <a>Static assets Products Page</a>
+        </Link>
+        <br />
+        <Link href="/worker-products">
+          <a>Web worker downloaded Products Page</a>
+        </Link>
+        <br />
+        <Link href="/promised-products">
+          <a>Promise based Web worker Products Page</a>
+        </Link>
+        <br />
+        <Link href="/sequence-products">
+          <a>Sequentially downloaded Products Page</a>
         </Link>
       </section>
 
