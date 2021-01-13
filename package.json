@@ -9,10 +9,12 @@
         "start": "next start"
     },
     "dependencies": {
+        "@zeit/next-workers": "^1.0.0",
         "airtable": "^0.10.1",
         "date-fns": "^2.16.1",
         "gray-matter": "^4.0.2",
         "next": "10.0.4",
+        "next-compose-plugins": "^2.2.1",
         "next-with-workbox": "^2.0.1",
         "react": "17.0.1",
         "react-dom": "17.0.1",
@@ -22,7 +24,8 @@
         "remark": "^13.0.0",
         "remark-html": "^13.0.1",
         "workbox-precaching": "^5.1.4",
-        "workbox-window": "^5.1.4"
+        "workbox-window": "^5.1.4",
+        "worker-loader": "^2.0.0"
     },
     "devDependencies": {
         "redux-devtools-extension": "^2.13.8"
