@@ -8,7 +8,6 @@ import { getRecords } from '../lib/airtable'
 
 export async function getStaticProps() {
   const allProducts = await getRecords();
-  console.log(allProducts.selectedFields);
   return { 
     props: {
      allProducts
