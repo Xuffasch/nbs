@@ -26,8 +26,5 @@
         "workbox-precaching": "^5.1.4",
         "workbox-window": "^5.1.4",
         "worker-loader": "^2.0.0"
-    },
-    "devDependencies": {
-        "redux-devtools-extension": "^2.13.8"
     }
 }
