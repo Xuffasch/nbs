@@ -33,7 +33,7 @@ export default function Products({ allProducts }) {
               <li key={p.id}>
                 {p.animal}
                 <br />
-                <Image src={`${imageData.url}`} alt={`${p.animal}`} width="300" height="200" />
+                <Image src={`${imageData.url}`} alt={`${p.animal}`} width={300} height={200} />
                 {/* <img src={`${imageData.url}`} alt={`${p.animal}`} width="300" height="200" /> */}
                 {/* <img data-src={`${imageData.url}`} /> */}
               </li>

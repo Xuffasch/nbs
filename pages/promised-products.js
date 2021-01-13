@@ -37,6 +37,8 @@ export default function WorkerProducts({ products }) {
             resolve(null);
           };
           img.src = url;
+          img.width = "300";
+          img.height = "200";
         });
       }
       return new Promise((resolve, reject) => {

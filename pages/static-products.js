@@ -38,7 +38,7 @@ export default function StaticProducts({initialProducts}) {
               <li key={`${p.name}`}>
                 {p.name}
                 <br />
-                <img src={`/${p.image}`} alt={`${p.name}`} width="200" height="200" />
+                <img src={`/${p.image}`} alt={`${p.name}`} width="300" height="200" />
               </li>
             )
           })}

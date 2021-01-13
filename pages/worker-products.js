@@ -62,7 +62,7 @@ export default function WorkerProducts({ allProducts }) {
               <li key={p.id}>
                 {p.animal}
                 <br />
-                <img data-src={`${imageData.url}`} alt={`${p.animal}`} width="200" height="200" />
+                <img data-src={`${imageData.url}`} alt={`${p.animal}`} width="300" height="200" />
               </li>
             )
           })}
