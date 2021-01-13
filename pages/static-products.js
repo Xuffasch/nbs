@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import Image from 'next/image'
 
 import Layout from '../components/layout'
 
@@ -8,7 +7,6 @@ const fs = require('fs')
 
 export async function getStaticProps() {
   let files  = fs.readdirSync('public')
-  console.log("current products pictures", files)
 
   let initialProducts = files.map(item => {
       return /.jpg|.png/g.test(item) ? {
@@ -17,8 +15,6 @@ export async function getStaticProps() {
       } : null
     }
   ).filter(item => item !== null)
-
-  console.log("initial products : ", initialProducts)
 
   return {
     props: {
