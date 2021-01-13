@@ -49,7 +49,7 @@ export default function Home({ allPostsData }) {
         </p>
       </section>
       <section>
-        <Link href="/products">
+        <Link href="/nextImage-products">
           <a>Next Image Products Page</a>
         </Link>
         <br />
