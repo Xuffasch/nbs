@@ -25,19 +25,21 @@ const useMemory = () => {
   const count = useSelector( state => state.count)
   const altMode = useSelector( state => state.altMode)
   const sw_on = useSelector( state => state.activate_sw)
+
   const dispatch = useDispatch()
 
   const increase = () => dispatch( { type: actions.ADD_COUNTER } )
   const decrease = () => dispatch( { type: actions.DECREASE_COUNTER })
   const changeMode = () => dispatch( { type: actions.CHANGE_MODE } )
+  const resetStore = () => dispatch( { type: actions.RESET_STORE })
 
   const activate_sw = () => dispatch( { type: actions.USE_SERVICE_WORKER })
   
-  return { count, altMode, sw_on, increase, decrease, changeMode, activate_sw }
+  return { count, altMode, sw_on, increase, decrease, changeMode, resetStore, activate_sw }
 }
 
 export default function Home({ allPostsData }) {
-  const { count, altMode, sw_on, increase, decrease, changeMode, activate_sw } = useMemory()
+  const { count, altMode, sw_on, increase, decrease, changeMode, resetStore, activate_sw } = useMemory()
 
   console.log("Service worker should operate : ", sw_on);
 
@@ -91,6 +93,8 @@ export default function Home({ allPostsData }) {
         <button id='ping'>Check SW clients</button>
         <br />
         <button onClick={activate_sw}>Switch service worker {sw_on ? 'off' : 'on'}</button>
+        <br />
+        <button onClick={resetStore}>Reset Store</button>
         <br />
         <Link href="/nextImage-products">
           <a>Next Image Products Page</a>

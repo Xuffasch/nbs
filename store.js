@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 
 import { persistReducer } from 'redux-persist'
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 import storage from 'redux-persist/lib/storage'
 
 import * as actions from './actions'
@@ -41,6 +42,11 @@ const nbsReducer = function(state = initialState, action) {
         ...state,
         activate_sw: !state.activate_sw
       }
+    case actions.RESET_STORE:
+      storage.removeItem('persist:primary');
+      return {
+        ...initialState
+      }
     default:
       return {
         ...state
@@ -48,12 +54,28 @@ const nbsReducer = function(state = initialState, action) {
   }
 }
 
+const appReducer = combineReducers({
+  nbsReducer,
+})
+
+const rootReducer = (state, action) => {
+  if (action.type === actions.RESET_STORE) {
+    storage.removeItem('persist:primary');
+    
+    state = undefined
+  }
+  
+  return appReducer(state, action)
+}
+
 const persistConfig = {
   key: 'primary',
-  storage
+  storage,
+  stateReconciler: autoMergeLevel2
 }
 
 const persistedReducer = persistReducer(persistConfig, nbsReducer)
+// const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 function initStore(preloadedState = initialState) {
   return createStore(
