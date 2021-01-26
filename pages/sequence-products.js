@@ -8,7 +8,7 @@ import { getRecords } from '../lib/airtable'
 
 export async function getStaticProps() {
   const allProducts = await getRecords();
-  console.log("Airtable products for Sequence Products page", allProducts.selectedFields);
+  // console.log("Airtable products for Sequence Products page", allProducts.selectedFields);
   return { 
     props: {
      allProducts
@@ -33,6 +33,10 @@ export default function SequenceProducts({ allProducts }) {
 
     preload(imgElements);
 
+    window.addEventListener('unload', () => {
+      navigator.serviceWorker.controller.postMessage( { type: "CLOSING" });
+    })
+
   }, [])
 
   return (
@@ -46,7 +50,6 @@ export default function SequenceProducts({ allProducts }) {
         <ul>
           {allProducts.selectedFields.map(p => {
             let imageData = p.image
-            console.log("listed product url : ", imageData.url)
             return (
               <li key={p.id}>
                 {p.animal}

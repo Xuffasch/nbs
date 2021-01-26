@@ -1,3 +1,5 @@
 export const CHANGE_MODE = "change_mode"
 export const ADD_COUNTER = "add_counter"
 export const DECREASE_COUNTER = "decrease_counter"
+export const USE_SERVICE_WORKER = "use_service_worker"
+export const RESET_STORE = "reset_store"

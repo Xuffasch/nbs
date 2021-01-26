@@ -26,6 +26,10 @@ export default function WorkerProducts({ products }) {
 
     // console.log("products : ", products);
 
+    window.addEventListener('unload', () => {
+      navigator.serviceWorker.controller.postMessage( { type: "CLOSING" });
+    })
+
     const resolveImages = urlArray => {
       const createImage = url => {
         return new Promise((resolve, reject) => {

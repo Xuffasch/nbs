@@ -1,8 +1,11 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Date from '../components/date'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../actions'
+
+import { Workbox } from 'workbox-window'
 
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
@@ -19,19 +22,55 @@ export async function getStaticProps() {
 }
 
 const useMemory = () => {
-  const count = useSelector((state) => state.count)
-  const altMode = useSelector((state) => state.altMode)
+  const count = useSelector( state => state.count)
+  const altMode = useSelector( state => state.altMode)
+  const sw_on = useSelector( state => state.activate_sw)
   const dispatch = useDispatch()
 
-  const increase = () => dispatch( {type: actions.ADD_COUNTER} )
-  const decrease = () => dispatch( {type: actions.DECREASE_COUNTER })
-  const changeMode = () => dispatch( {type: actions.CHANGE_MODE})
+  const increase = () => dispatch( { type: actions.ADD_COUNTER } )
+  const decrease = () => dispatch( { type: actions.DECREASE_COUNTER })
+  const changeMode = () => dispatch( { type: actions.CHANGE_MODE } )
+
+  const activate_sw = () => dispatch( { type: actions.USE_SERVICE_WORKER })
   
-  return { count, altMode, increase, decrease, changeMode }
+  return { count, altMode, sw_on, increase, decrease, changeMode, activate_sw }
 }
 
 export default function Home({ allPostsData }) {
-  const { count, altMode, increase, decrease, changeMode } = useMemory()
+  const { count, altMode, sw_on, increase, decrease, changeMode, activate_sw } = useMemory()
+
+  console.log("Service worker should operate : ", sw_on);
+
+  useEffect( async () => {
+    console.log('sw switch', sw_on);
+    console.log('Service Worker active ? ', navigator.serviceWorker.ready )
+
+    if ('serviceWorker' in navigator && sw_on) {
+      const wb = new Workbox('sw.js', { scope : '/' });
+      wb.register();
+    }   
+
+    if (navigator.serviceWorker.controller && !sw_on) {
+      navigator.serviceWorker.controller.postMessage( { type: 'UNREGISTER' });
+    }
+
+    let btn = document.getElementById('ping');
+
+    btn.onclick = () => {
+      navigator.serviceWorker.controller.postMessage(
+        { type: 'ping' }
+      )
+    }
+
+    navigator.serviceWorker.onmessage = (event) => {
+      console.log("message from service worker : ", event);
+    }
+
+    window.addEventListener('unload', () => {
+      navigator.serviceWorker.controller.postMessage( { type: "CLOSING" });
+    })
+
+  })
   
   return (
     <Layout home>
@@ -49,6 +88,10 @@ export default function Home({ allPostsData }) {
         </p>
       </section>
       <section>
+        <button id='ping'>Check SW clients</button>
+        <br />
+        <button onClick={activate_sw}>Switch service worker {sw_on ? 'off' : 'on'}</button>
+        <br />
         <Link href="/nextImage-products">
           <a>Next Image Products Page</a>
         </Link>

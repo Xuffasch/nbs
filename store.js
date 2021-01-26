@@ -1,8 +1,7 @@
 import { useMemo } from 'react'
-import { createStore, applyMiddleware } from 'redux'
-// import { composeWithDevTools } from 'redux-devtools-extension'
+import { createStore } from 'redux'
 
-import { persistStore, persistReducer } from 'redux-persist'
+import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 import * as actions from './actions'
@@ -12,7 +11,8 @@ let store
 const initialState = {
   altMode: true,
   count: 15,
-  cart: []
+  cart: [],
+  activate_sw: true
 }
 
 const nbsReducer = function(state = initialState, action) {
@@ -35,8 +35,16 @@ const nbsReducer = function(state = initialState, action) {
         ...state,
         count: state.count - 1
       };
+    case actions.USE_SERVICE_WORKER:
+      console.log("service worker is switched ", !state.activate_sw ? "off" : "on");
+      return {
+        ...state,
+        activate_sw: !state.activate_sw
+      }
     default:
-      return state
+      return {
+        ...state
+      }
   }
 }
 
@@ -51,7 +59,6 @@ function initStore(preloadedState = initialState) {
   return createStore(
     persistedReducer,
     preloadedState,
-    // composeWithDevTools(applyMiddleware())
   )
 }
 
@@ -67,6 +74,7 @@ export const initializeStore = (preloadedState) => {
     store = undefined
   }
 
+  /* For SSR and SSG */
   if (typeof window === 'undefined') return _store
 
   if (!store) store = _store

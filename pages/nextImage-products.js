@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Layout from '../components/layout'
 
 import { getRecords } from '../lib/airtable'
+import { useEffect } from 'react'
 
 export async function getStaticProps() {
   const allProducts = await getRecords();
@@ -16,6 +17,15 @@ export async function getStaticProps() {
 }
 
 export default function Products({ allProducts }) {
+  useEffect( () => {
+    let sw = navigator.serviceWorker;
+    console.log("current service worker available for nextImage products page : ", sw);
+
+    window.addEventListener('unload', () => {
+      navigator.serviceWorker.controller.postMessage( { type: "CLOSING" });
+    })
+  }, [])
+
   return (
     <Layout>
       <Head>

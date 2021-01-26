@@ -3,6 +3,8 @@ import Link from 'next/link'
 
 import Layout from '../components/layout'
 
+import { useEffect } from 'react'
+
 const fs = require('fs')
 
 export async function getStaticProps() {
@@ -24,6 +26,15 @@ export async function getStaticProps() {
 }
 
 export default function StaticProducts({initialProducts}) {
+  useEffect( () => {
+    let sw = navigator.serviceWorker;
+    console.log("current service worker available for static products page : ", sw)
+
+    window.addEventListener('unload', () => {
+      navigator.serviceWorker.controller.postMessage( { type: "CLOSING" });
+    })
+  }, [])
+
   return (
     <Layout>
       <Head>

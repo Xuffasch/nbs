@@ -31,7 +31,7 @@ export default function WorkerProducts({ allProducts }) {
       const objectURL = URL.createObjectURL(imageData.blob)
     
       imageElement.onload = () => {
-        // imageElement.removeAttribute('data-src')
+        imageElement.removeAttribute('data-src')
     
         URL.revokeObjectURL(objectURL)
       }
@@ -42,6 +42,10 @@ export default function WorkerProducts({ allProducts }) {
     imgElements.forEach(imageElement => {
       const imageURL = imageElement.getAttribute('data-src')
       ImageLoaderWorker.postMessage(imageURL)
+    })
+
+    window.addEventListener('unload', () => {
+      navigator.serviceWorker.controller.postMessage( { type: "CLOSING" });
     })
 
   }, [])
@@ -62,7 +66,7 @@ export default function WorkerProducts({ allProducts }) {
               <li key={p.id}>
                 {p.animal}
                 <br />
-                <img data-src={`${imageData.url}`} alt={`${p.animal}`} width="300" height="200" />
+                {/* <img data-src={`${imageData.url}`} alt={`${p.animal}`} width="300" height="200" /> */}
               </li>
             )
           })}
